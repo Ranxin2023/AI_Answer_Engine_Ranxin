@@ -2,6 +2,7 @@
 // Refer to the Next.js Docs: https://nextjs.org/docs/app/building-your-application/routing/middleware
 // Refer to Redis docs on Rate Limiting: https://upstash.com/docs/redis/sdks/ratelimit-ts/algorithms
 
+// start folking
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
