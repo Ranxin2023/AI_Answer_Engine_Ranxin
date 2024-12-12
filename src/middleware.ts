@@ -5,7 +5,17 @@
 // start folking
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.fixedWindow(5, "1m"), // Allow 5 requests per minute per IP
+  prefix: "ratelimit", // Optional prefix for Redis keys
+});
 export async function middleware(request: NextRequest) {
   try {
 
