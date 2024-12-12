@@ -3,13 +3,50 @@
 // Refer to the Groq SDK here on how to use an LLM: https://www.npmjs.com/package/groq-sdk
 // Refer to the Cheerio docs here on how to parse HTML: https://cheerio.js.org/docs/basics/loading
 // Refer to Puppeteer docs here: https://pptr.dev/guides/what-is-puppeteer
-
+import { Groq } from 'groq-sdk';
+// import cheerio from 'cheerio';
+import { load } from 'cheerio';
+import puppeteer from 'puppeteer';
 export async function POST(req: Request) {
   try {
+     // Step 1: Parse the request body
+     const body = await req.json();
+     const { url, query } = body;
+     if (!url || !query) {
+      return new Response(JSON.stringify({ error: 'Missing URL or query in the request body.' }), { status: 400 });
+    }
+
+    // Step 2: Use Puppeteer to scrape the webpage
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+    const htmlContent = await page.content();
+    await browser.close();
+
+    // Step 3: Use Cheerio to parse the HTML
+    const $ = load(htmlContent); // Use 'load' from Cheerio
+    const extractedText = $('body').text(); // Extract text from the body tag
+
+    // Step 4: Use the Groq SDK to process the query
+    const client = new Groq({
+      apiKey: process.env.GROQ_API_KEY, // Replace with your actual API key
+    });
+
+    const chatCompletion = await client.chat.completions.create({
+      messages: [{ role: 'user', content: query }],
+      model: 'llama3-8b-8192',
+      // context: extractedText, 
+    });
+    // for debugging
+    console.log(chatCompletion.choices[0].message.content);
 
 
+    // Step 5: Return the result
+    return new Response(JSON.stringify({ result: chatCompletion }), { status: 200 });
   } catch (error) {
 
-
+    console.error('Error in chat API:', error);
+    return new Response(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });
   }
 }
