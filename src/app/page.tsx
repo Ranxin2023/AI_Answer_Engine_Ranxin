@@ -33,12 +33,24 @@ export default function Home() {
       });
 
       // TODO: Handle the response from the chat API to display the AI response in the UI
+      
 
+      if (!response.ok) {
+        throw new Error("Failed to fetch AI response");
+      }
 
+      const data = await response.json();
+      const aiMessage = { role: "ai" as const, content: data.result };
+      // console.log("AI message is: ",{aiMessage})
+      // console.log("data is: ",{data})
+      // Add AI message to the conversation
+      setMessages(prev => [...prev, aiMessage]);
 
 
     } catch (error) {
       console.error("Error:", error);
+      const errorMessage = { role: "ai" as const, content: "Oops! Something went wrong. Please try again." };
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
@@ -48,11 +60,11 @@ export default function Home() {
   // TODO: Modify the color schemes, fonts, and UI as needed for a good user experience
   // Refer to the Tailwind CSS docs here: https://tailwindcss.com/docs/customizing-colors, and here: https://tailwindcss.com/docs/hover-focus-and-other-states
   return (
-    <div className="flex flex-col h-screen bg-gray-900">
+    <div className="flex flex-col h-screen bg-gradient-to-bl from-indigo-900 via-purple-900 to-gray-900">
       {/* Header */}
       <div className="w-full bg-gray-800 border-b border-gray-700 p-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-xl font-semibold text-white">Chat</h1>
+          <h1 className="text-3xl font-bold text-white tracking-wide">AI Chat Assistant</h1>
         </div>
       </div>
 
@@ -83,7 +95,7 @@ export default function Home() {
             <div className="flex gap-4 mb-4">
               <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">
                 <svg
-                  className="w-5 h-5 text-gray-400"
+                  className="w-5 h-5 text-gray-400 animate-spin"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -103,7 +115,7 @@ export default function Home() {
       </div>
 
       {/* Input Area */}
-      <div className="fixed bottom-0 w-full bg-gray-800 border-t border-gray-700 p-4">
+      <div className="fixed bottom-0 w-full bg-gradient-to-r from-yellow-600 to-orange-600 border-t border-gray-700 p-4">
         <div className="max-w-3xl mx-auto">
           <div className="flex gap-3 items-center">
             <input
