@@ -7,6 +7,17 @@ Inspired by platforms like Perplexity.ai, a company valued at over $9 billion, t
 
 The project’s goal is to deliver accurate and concise answers while providing context by linking to its sources, ensuring users can trust the information provided. For reference, you can explore an example of this kind of application here: https://www.webchat.so/.
 
+## Features
+1. **Web Scraping**:
+    - The application scrapes content from web pages, extracting key information like titles, headings, and article text.
+2. **Caching with Redis**:
+    - Scraped data is cached to improve performance and reduce redundant requests.
+3. **Rate Limiting**:
+    - Using Upstash Redis, the app enforces fair usage by limiting requests to 5 per minute per user.
+4. **AI Query Processing**:
+    - The AI, powered by the Groq SDK, processes user queries and generates intelligent responses based on the scraped data.
+5. **Responsive UI**:
+    - The user interface is built with **Tailwind CSS**, offering a clean and responsive design for seamless interaction.
 ## Technologies Used
 - **Next.js**: A React-based framework for building server-rendered and statically generated web applications.
 - **TypeScript**: Adds type safety and enhances the development experience.
