@@ -10,22 +10,7 @@ import { load } from 'cheerio';
 import puppeteer from 'puppeteer';
 import parseBody from '../utils/catch_url';
 import { scrapeUrl } from '../utils/scrapter';
-// const parseBody = async (body: string) => {
-//   // Use a regular expression to extract the URL
-//   // const body = await req.text(); 
-//   console.log("body string is", body)
-//   const urlRegex = /(https?:\/\/[^\s]+)/;
-//   const urlMatch = body.match(urlRegex);
 
-//   if (!urlMatch) {
-//     throw new Error("No URL found in the body.");
-//   }
-
-//   const url = urlMatch[0]; // Extracted URL
-//   const query = body.replace(url, "").trim(); // Remaining text is the query
-
-//   return { url, query };
-// };
 export async function POST(req: Request) {
   try {
      // Step 1: Parse the request body
