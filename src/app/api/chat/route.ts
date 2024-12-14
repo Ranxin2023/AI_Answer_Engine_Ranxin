@@ -8,8 +8,8 @@ import { Groq } from 'groq-sdk';
 // import cheerio from 'cheerio';
 import { load } from 'cheerio';
 import puppeteer from 'puppeteer';
-import parseBody from './catch_url';
-import { scrapeUrl } from './scrapter';
+import parseBody from '../utils/catch_url';
+import { scrapeUrl } from '../utils/scrapter';
 // const parseBody = async (body: string) => {
 //   // Use a regular expression to extract the URL
 //   // const body = await req.text(); 
