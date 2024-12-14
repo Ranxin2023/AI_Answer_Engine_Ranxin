@@ -100,6 +100,7 @@ npm run dev
 │   ├── utils/
 │   │   ├── scrape.ts       # Logic for web scraping
 │   │   ├── cache.ts        # Redis caching functions
+│   ├── page.ts             # User Interface of the AI Chat
 │   ├── middleware.ts       # Middleware for rate limiting
 ├── .env.example            # Environment variables template
 ├── package.json            # Node.js dependencies
